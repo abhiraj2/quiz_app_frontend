@@ -1,0 +1,58 @@
+{
+    "users":[
+        {
+            "username": "abhiraj",
+            "tests":[
+                {
+                    "id":1,
+                    "completed": false,
+                    "score": 0,
+                    "duration": 180
+                },
+                {
+                    "id":2,
+                    "completed": true,
+                    "score": 30,
+                    "duration": 30
+                }
+            ],
+            "password": "Iamok123"
+        },
+        {
+            "username": "advaya",
+            "tests":[
+                {
+                    "id":1,
+                    "completed": false,
+                    "score": 0,
+                    "duration": 180
+                },
+                {
+                    "id":2,
+                    "completed": false,
+                    "score": 0,
+                    "duration": 30
+                }
+            ],
+            "password": "areyouOK123"
+        },
+        {
+            "username": "avs",
+            "tests":[
+                {
+                    "id":1,
+                    "completed": false,
+                    "score": 0,
+                    "duration": 180
+                },
+                {
+                    "id":2,
+                    "completed": true,
+                    "score": 25,
+                    "duration": 30
+                }
+            ],
+            "password": "abhirajISok123"
+        }
+    ]
+}
