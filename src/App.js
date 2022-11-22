@@ -10,7 +10,7 @@ import {
   useParams
 } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown"
-const backend_url = "http://localhost:9000/" || "https://shrouded-island-44163.herokuapp.com/"
+const backend_url = "https://shrouded-island-44163.herokuapp.com/"
 
 
 var users;
