@@ -301,7 +301,9 @@ function Signup(props){
         <br/>
         <input className='userInput' type="password" id="password" placeholder='Password' value={password} onChange={handleChangePass}></input> 
         <input className='userInput' type="password" id="confirmPassword" placeholder='Confirm Password' value={password2} onChange={handleChangePass2}></input> 
-
+        
+        <label htmlFor="group">Group</label>
+        <br/>
         <select id="group">
           <option value="A">A</option>
           <option value="B">B</option>
