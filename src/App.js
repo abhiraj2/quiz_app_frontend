@@ -9,8 +9,8 @@ import {
   Link,
   useParams
 } from "react-router-dom";
-import Alert from "react-bootstrap/Alert"
-const backend_url = "https://shrouded-island-44163.herokuapp.com/"
+import Dropdown from "react-bootstrap/Dropdown"
+const backend_url = "http://localhost:9000/" || "https://shrouded-island-44163.herokuapp.com/"
 
 
 var users;
@@ -189,7 +189,7 @@ function Login(props){
   //   }
   // }
 
-  var handleSubmit = (event) => {
+  var handleSubmitLogin = (event) => {
     let valid = 0;
     let i;
     for(i of users){
@@ -227,7 +227,7 @@ function Login(props){
           <label >Password</label>
           <br/>
           <input className='userInput' type="password" id="password" placeholder='Password' value={password} onChange={handleChangePass}></input> 
-          <div className='op' id="loginButton" onClick={handleSubmit}>Login</div>  
+          <div className='op' id="loginButton" onClick={handleSubmitLogin}>Login</div>  
         </form>
         <div>
           Don't have ID? <Link id="registerLink" to="/signup">Signup</Link>
@@ -237,9 +237,14 @@ function Login(props){
   );
 }
 
-function Signup(){
+function Signup(props){
+  //console.log(props)
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState(''); 
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState(''); 
+  //const [gr, setGroup] = useState(0);
+  const [confirmPass, setConfirm] = useState(false);
+  //let setError = props.setError
   var handleChangeName = (event) => {
     console.log(username);
     setUsername(event.target.value);
@@ -249,20 +254,60 @@ function Signup(){
     setPassword(event.target.value);
   }
 
+  var handleChangePass2 = (event) => {
+    console.log(password2);
+    setPassword2(event.target.value);
+    // if(password2 == password){
+    //   setConfirm(true);
+    // }
+    // else setConfirm(true);
+  }
+
+  var handleSubmitRegister = () => {
+    if(password == password2){
+      let temp = {
+        username: username,
+        group:    document.querySelector("#group").value,
+        tests:    [],
+        password: password
+      }
+      let reqOptions = {
+        method: "POST", 
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(temp)
+      }
+      fetch(backend_url+"addUser/", reqOptions)
+        .then(()=>{
+          fetch(backend_url+"updateDBU/")
+        })
+
+    }
+    else{
+      console.log(password, password2, "Mismatch");
+    }
+  }
+
   return(
     <div className="App">
       <div className='formMessage'>
         Enter your details to Signup
       </div>
       <form>
-        <label for="username">Username</label>
+        <label htmlFor="username">Username</label>
         <br/>
         <input className='userInput' type="text" id="username" placeholder='Username' value={username} onChange={handleChangeName}></input> 
         <br/>
-        <label for="password">Password</label>
+        <label htmlFor="password">Password</label>
         <br/>
         <input className='userInput' type="password" id="password" placeholder='Password' value={password} onChange={handleChangePass}></input> 
-        <Link className='op' id="registerButton" to="/user">Signup</Link>
+        <input className='userInput' type="password" id="confirmPassword" placeholder='Confirm Password' value={password2} onChange={handleChangePass2}></input> 
+
+        <select id="group">
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+        </select>
+        <div className='op' id="registerButton" onClick={handleSubmitRegister}>Signup</div>
       </form>
       <div>
         Already have an ID? <Link id="loginLink" to="/">Login</Link>
@@ -293,6 +338,7 @@ function Home(props){
       .then(res=>{users=res.users; setUsers(users)})
       .catch(err=>console.log(err));
       //causes bug
+    fetch(backend_url+'syncData/');
       
   });
   
@@ -314,7 +360,7 @@ function Error(props){
   }
   return(
     <div className='App'>
-      <Alert variant='danger'>Error!!</Alert>
+      <div>Error!!</div>
       <div className='errorMessage'>{props.error}</div>
       <div className='op' onClick={eraseError}>Take me home</div>
     </div>
@@ -357,7 +403,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home user={logged}></Home>}></Route>
         <Route path='/test/:id' element={<Test user={logged}></Test>}></Route>
-        <Route path='/signup' element={<Signup/>}></Route>
+        <Route path='/signup' element={<Signup id="bro" setError={setError}></Signup>}></Route>
       </Routes>
     </Router>
   );
