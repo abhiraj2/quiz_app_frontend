@@ -10,7 +10,7 @@ import {
   useParams
 } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown"
-const backend_url = "https://shrouded-island-44163.herokuapp.com/"
+const backend_url = "https://quiz-app-backend-sbbs.onrender.com/"
 
 
 var users;
@@ -112,9 +112,12 @@ function Test(props){
       let submitted = false;
       fetch(backend_url+"updateTest/", reqOptions)
         .then(res=>{console.log(res); submitted=true;setDone(submitted);})
+        .then(()=>{
+          fetch(backend_url+"updateDBU/")
+            .catch(err=>console.error(err));
+        })
         .catch(err=>console.log(err))
-      fetch(backend_url+"updateDBQ/")
-        .catch(err=>console.error(err));
+      
       setScore(count);
     }
     else{
